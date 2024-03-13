@@ -4,12 +4,14 @@ const app = express();
 const mongoose = require('mongoose')
 const genres = require('./Routes/genre')
 const customers = require('./Routes/customer')
+const movies = require('./Routes/movie');
 // Middlewares
 app.use(express.json());
 
 // Routes
 app.use('/api/genres', genres)
 app.use('/api/customers',customers)
+app.use('/api/movies', movies)
 
 const port = process.env.PORT || 3000
 
