@@ -2,6 +2,9 @@ require('dotenv').config();
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose')
+const Joi = require('joi')
+Joi.objectId = require('joi-objectid')(Joi)
+
 const genres = require('./Routes/genre')
 const customers = require('./Routes/customer')
 const movies = require('./Routes/movie');
