@@ -5,6 +5,7 @@ const mongoose = require('mongoose')
 const genres = require('./Routes/genre')
 const customers = require('./Routes/customer')
 const movies = require('./Routes/movie');
+const rentals = require('./Routes/rental');
 // Middlewares
 app.use(express.json());
 
@@ -12,6 +13,7 @@ app.use(express.json());
 app.use('/api/genres', genres)
 app.use('/api/customers',customers)
 app.use('/api/movies', movies)
+app.use('/api/rentals', rentals)
 
 const port = process.env.PORT || 3000
 
