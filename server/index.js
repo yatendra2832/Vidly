@@ -10,6 +10,7 @@ const customers = require('./Routes/customer')
 const movies = require('./Routes/movie');
 const rentals = require('./Routes/rental');
 const users = require('./Routes/user');
+const auth = require('./Routes/auth')
 // Middlewares
 app.use(express.json());
 
@@ -19,6 +20,7 @@ app.use('/api/customers', customers)
 app.use('/api/movies', movies)
 app.use('/api/rentals', rentals)
 app.use('/api/users', users)
+app.use('/api/auth', auth)
 
 const port = process.env.PORT || 3000
 
