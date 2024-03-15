@@ -18,11 +18,9 @@ router.post('/', async (req, res) => {
     user.password = await bcrypt.hash(user.password, salt);
     await user.save()
 
-    const token = jwt.sign({ _id: user._id }, process.env.JWT_PRIVATE_KEY)
+    const token = user.generateAuthToken()
 
     res.header('x-auth-token', token).status(200).send(_.pick(user, ['_id', 'username', 'email']));
-
-
 
 })
 
