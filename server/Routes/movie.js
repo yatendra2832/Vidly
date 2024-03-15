@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const { Movie, validateMovie } = require('../Models/movie')
-const { Genre } = require('../Models/genre')
+const { Genre } = require('../Models/genre');
+const { auth } = require('../Middleware/auth');
 // GET : Getting all the movies
 router.get('/', async (req, res) => {
     const movie = await Movie.find().sort('name')
@@ -17,7 +18,7 @@ router.get('/:id', async (req, res) => {
 })
 
 // POST : Creating the data to the database
-router.post('/', async (req, res) => {
+router.post('/',auth, async (req, res) => {
     const { error } = validateMovie(req.body);
     if (error) return res.status(400).send(error.details[0].message)
 
@@ -41,7 +42,7 @@ router.post('/', async (req, res) => {
 })
 
 // PUT : Upating the Data with the given id 
-router.put('/:id', async (req, res) => {
+router.put('/:id', auth,async (req, res) => {
     const { error } = validateMovie(req.body);
     if (error) return res.status(400).send(error.details[0].message)
 
@@ -65,7 +66,7 @@ router.put('/:id', async (req, res) => {
 })
 
 // DELETE : Deleting the movie with the given id 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id',auth, async (req, res) => {
     const movie = await Movie.findByIdAndDelete(req.params.id)
     if (!movie) return res.status(404).send('Movie With the given id was not found ');
 

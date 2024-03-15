@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const {Customer,validateCustomer} = require('../Models/customer');
+const { Customer, validateCustomer } = require('../Models/customer');
+const { auth } = require('../Middleware/auth')
 // GET : getting all the customers
 router.get('/', async (req, res) => {
     const customer = await Customer.find();
@@ -17,7 +18,7 @@ router.get('/:id', async (req, res) => {
 })
 
 // POST : Creating the customer 
-router.post('/', async (req, res) => {
+router.post('/', auth, async (req, res) => {
     const { error } = validateCustomer(req.body)
     if (error) return res.status(400).send(error.details[0].message)
 
@@ -32,7 +33,7 @@ router.post('/', async (req, res) => {
 })
 
 // PUT : Update the Customer with the given id 
-router.put('/:id', async (req, res) => {
+router.put('/:id', auth, async (req, res) => {
     const { error } = validateCustomer(req.body);
     if (error) return res.status(400).send(error.details[0].message)
 
@@ -43,7 +44,7 @@ router.put('/:id', async (req, res) => {
 })
 
 // DELETE : Delete the cusomter with the given id 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', auth, async (req, res) => {
 
     const customer = await Customer.findByIdAndDelete(req.params.id);
     if (!customer) return res.status(404).send('Customer with the Given id Was not Found ');
