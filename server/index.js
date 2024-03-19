@@ -5,6 +5,7 @@ const app = express();
 const mongoose = require('mongoose')
 const Joi = require('joi')
 Joi.objectId = require('joi-objectid')(Joi)
+const winston = require('winston'); 
 
 const genres = require('./Routes/genre')
 const customers = require('./Routes/customer')
@@ -15,6 +16,8 @@ const auth = require('./Routes/auth');
 const { error } = require('./Middleware/error');
 // Middlewares
 app.use(express.json());
+
+
 
 // Routes
 app.use('/api/genres', genres)
