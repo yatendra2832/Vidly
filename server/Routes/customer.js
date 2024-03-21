@@ -4,6 +4,7 @@ const { Customer, validateCustomer } = require('../Models/customer');
 const { auth } = require('../Middleware/auth')
 // GET : getting all the customers
 router.get('/', async (req, res) => {
+    // throw new Error('Could not get the customers');
     const customer = await Customer.find();
     res.status(200).send(customer);
 })

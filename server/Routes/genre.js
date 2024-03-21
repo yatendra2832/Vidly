@@ -7,7 +7,7 @@ const { admin } = require('../Middleware/admin');
 // GET : Getting all the genres
 router.get('/', async (req, res) => {
 
-    throw new Error('Could not get the genres')
+    // throw new Error('Could not get the genres')
     const genres = await Genre.find().sort('name');
     res.status(200).send(genres);
 })

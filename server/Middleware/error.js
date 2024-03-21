@@ -7,16 +7,16 @@ require('dotenv').config();
 const logger = winston.createLogger({
     transports: [
         new winston.transports.File({ filename: 'error.log' }),
-        new MongoDB.MongoDB({
-            db: 'Vidly', // Atlas database name
-            options: {
-                useNewUrlParser: true,
-                useUnifiedTopology: true,
-                uri: process.env.MONGODB_URL 
-            },
-            collection: 'logs',
-            storeHost: true
-        })
+        // new MongoDB.MongoDB({
+        //     db: 'Vidly', // Atlas database name
+        //     options: {
+        //         useNewUrlParser: true,
+        //         useUnifiedTopology: true,
+        //         uri: process.env.MONGODB_URL 
+        //     },
+        //     collection: 'logs',
+        //     storeHost: true
+        // })
     ],
     format: format.combine(format.timestamp(), format.simple()),
 });
