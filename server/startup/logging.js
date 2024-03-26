@@ -5,7 +5,7 @@ require('dotenv').config();
 
 module.exports = function () {
 
-  winston.handleExceptions(
+  winston.exceptions.handle(
     new winston.transports.Console({ colorize: true, prettyPrint: true }),
     new winston.transports.File({ filename: 'uncaughtExceptions.log' })
   );
@@ -14,9 +14,9 @@ module.exports = function () {
     winston.error('Unhandled Promise Rejection:', ex.message);
   });
 
-  winston.add(winston.transports.File, { filename: 'logfile.log' });
-  winston.add(winston.transports.MongoDB, {
+  winston.add(new winston.transports.File({ filename: 'logfile.log' }));
+  winston.add(new winston.transports.MongoDB({
     db: process.env.MONGODB_URL,
     collection: 'logs'
-  });
+  }));
 };
