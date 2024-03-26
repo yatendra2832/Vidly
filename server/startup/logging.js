@@ -3,13 +3,7 @@ require('winston-mongodb')
 require('express-async-errors');
 require('dotenv').config();
 
-
 module.exports = function () {
-  // winston.level = 'info';
-  // winston.format = winston.format.combine(
-  //   winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
-  //   winston.format.json()
-  // );
 
   winston.handleExceptions(
     new winston.transports.Console({ colorize: true, prettyPrint: true }),
