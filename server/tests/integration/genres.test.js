@@ -44,6 +44,21 @@ describe('/api/genres', () => {
     })
 
     describe('POST /', () => {
+
+        let token;
+
+        const sendAuthenticatedRequest = async (data) => {
+            return await request(server)
+                .post('/api/genres')
+                .set('x-auth-token', token)
+                .send(data);
+        }
+
+        beforeEach(async () => {
+            let user = new User()
+            token = await user.generateAuthToken()
+        })
+
         it('should return 401 if client is not logged in', async () => {
             const res = await request(server)
                 .post('/api/genres')
@@ -53,19 +68,29 @@ describe('/api/genres', () => {
         })
 
         it('should return 400 if genre is less than 5 characters', async () => {
-            const token = new User().generateAuthToken();
-
-            const res = await request(server).post('/api/genres').set('x-auth-token', token).send({ name: '12' });
+            const res = await sendAuthenticatedRequest({ name: '12' })
             expect(res.status).toBe(400)
-
         })
+
         it('should return 400 if genre is more than 50 characters', async () => {
-            const token = new User().generateAuthToken();
-
-            const res = await request(server).post('/api/genres').set('x-auth-token', token).send({ name: new Array(50).join('abc') });
+            const res = await sendAuthenticatedRequest({ name: new Array(50).join('abc') })
             expect(res.status).toBe(400)
+        })
+
+        it('should save the Genre if it is valid', async () => {
+            const res = await sendAuthenticatedRequest({ name: 'genre1' })
+            const genre = await Genre.find({ name: 'genre1' })
+            expect(genre).not.toBeNull();
 
         })
+
+        it('should return the Genre if it is valid', async () => {
+            const res = await sendAuthenticatedRequest({ name: 'genre1' });
+            expect(res.body).toHaveProperty('_id');
+            expect(res.body).toHaveProperty('name', 'genre1');
+
+        })
+
     })
 
 
